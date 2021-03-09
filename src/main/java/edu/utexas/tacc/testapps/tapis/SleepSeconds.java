@@ -9,6 +9,23 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.TreeMap;
 
+/** This application can be used to test that a job's inputs and outputs are transfered 
+ * as expected.  The application will perform the following:
+ * 
+ *  - Open an output file in the job's exec system output directory.
+ *  - Write some JVM properties to standard out and to the output file.
+ *  - Write all environment variables to standard out and to the output file.
+ *  - Write the input directory file listing to standard out and to the output file.
+ *  - Write the exec directory file listing to standard out and to the output file (if different than input).
+ *  - Sleep the prescribed number of seconds.
+ *  - Write the output directory file listing to standard out and to the output file.
+ *  - Write a completion message to standard out and to the output file.
+ * 
+ * If a command line parameter is provide, it should be an integral number of seconds that the
+ * application should sleep.  If no parameter is provided, a default sleep duration is used.
+ * 
+ * @author rcardone
+ */
 public class SleepSeconds 
 {
     // -------- Constants.
