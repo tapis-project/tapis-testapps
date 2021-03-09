@@ -1,0 +1,129 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>edu.utexas.tacc.tapis</groupId>
+		<artifactId>tapis-bom</artifactId>
+		<version>[1.11,2.0)</version>
+	</parent>
+
+	<artifactId>tapis-testapps</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<name>Tapis Test Applications</name>
+	<description>Tapis applications for test the Jobs and Apps services.</description>
+
+	<scm>
+		<connection>scm:git:https://github.com/tapis-project/tapis-testapps.git</connection>
+		<url>https://github.com/tapis-project/tapis-testapps</url>
+	</scm>
+
+	<properties>
+		<!-- Most properties set in parent tapis-bom -->
+		<!-- Properties can be overridden here -->
+		<!-- Individual projects may want to override. -->
+		<!-- Skip integration tests by default -->
+		<!-- Use mvn verify -DskipIntegrationTests=false to run integration tests -->
+		<skipIntegrationTests>true</skipIntegrationTests>
+	</properties>
+
+	<repositories>
+		<!-- Include snapshot repo so we can pickup snapshot version of parent 
+			bom -->
+		<repository>
+			<id>tapis-local-snapshots</id>
+			<name>Local repo for snapshots</name>
+			<url>http://c002.rodeo.tacc.utexas.edu:30044/repository/maven-snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>tapis-local-releases</id>
+			<name>Local repo for releases</name>
+			<url>http://c002.rodeo.tacc.utexas.edu:30044/repository/maven-releases</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+
+		<plugins>
+			<!-- Capture the git commit hash and branch identifiers. -->
+			<!-- See parent pom for configuration details. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<!-- The version is set in the parent pom -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+					</suiteXmlFiles>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<!-- buildnumber-maven-plugin updates properties in resources -->
+		<resources>
+			<!-- Write the project version number to the specified file. -->
+			<!-- Setting the targetPath puts the file into the jar at the -->
+			<!-- specified root-relative directory. The the modified -->
+			<!-- tapis.version file is always copied to the target/classes -->
+			<!-- directory. Do the same for other data that we want to -->
+			<!-- capture. A jar and war file will contain these files -->
+			<!-- as long as the templated files are in the configured -->
+			<!-- directory in the child project. -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/tapis.version</include>
+					<include>**/tapis.fullversion</include>
+					<include>**/git.info</include>
+					<include>**/build.time</include>
+				</includes>
+			</resource>
+
+			<!-- For some reason, we have to tell maven, surefire or testng -->
+			<!-- that all main/resources need to be copied to some target -->
+			<!-- directory. We also have to tell them to NOT undo filtering -->
+			<!-- for the files that we explicitly filter above. Good stuff. -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<excludes>
+					<exclude>**/tapis.version</exclude>
+					<exclude>**/tapis.fullversion</exclude>
+					<exclude>**/git.info</exclude>
+					<exclude>**/build.time</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
+		<finalName>testapps</finalName>
+
+	</build>
+
+	<dependencies>
+		<dependency>
+			<!-- There are only test dependencies on testng -->
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>
