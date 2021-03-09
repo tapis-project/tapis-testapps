@@ -44,7 +44,6 @@ public class SleepSeconds
     public static void main(String[] args) 
      throws Exception
     {
-        
         // Determine the amount of time to sleep.
         int sleepSecs;
         if (args.length > 0) 
