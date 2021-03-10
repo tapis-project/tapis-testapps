@@ -2,7 +2,6 @@ package edu.utexas.tacc.testapps.tapis;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -122,10 +121,11 @@ public class SleepSeconds
         return sortedMap;
     }
     
-    private BufferedOutputStream openOutFile(Map<String,String> envMap) throws FileNotFoundException
+    private BufferedOutputStream openOutFile(Map<String,String> envMap) throws IOException
     {
-        String outputDir = envMap.get(OUTPUT_DIR_VARIABLE);
-        var file = new File(outputDir, OUT_FILE);
+        if (envMap.get(OUTPUT_DIR_VARIABLE) == null) return null;
+        var file = new File(OUTPUT_DIR, OUT_FILE);
+        file.createNewFile();
         return new BufferedOutputStream(new FileOutputStream(file));
     }
     
@@ -133,14 +133,14 @@ public class SleepSeconds
     private void tee(String s) throws IOException
     {
         System.out.write(s.getBytes());
-        _outFile.write(s.getBytes());
+        if (_outFile != null) _outFile.write(s.getBytes());
     }
     
     // Write to stdout and to output file.
     private void tee(Map<String,String> map) throws IOException
     {
         printEnv(map, System.out);
-        printEnv(map, _outFile);
+        if (_outFile != null) printEnv(map, _outFile);
     }
 
     private void printEnv(Map<String,String> map, OutputStream out) 
