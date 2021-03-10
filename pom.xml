@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>tapis-testapps</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 
 	<name>Tapis Test Applications</name>
 	<description>Tapis applications for test the Jobs and Apps services.</description>

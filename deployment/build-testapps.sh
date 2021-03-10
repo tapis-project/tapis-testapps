@@ -11,8 +11,10 @@
 #
 ###########################################################
 
-export VER=${TAPIS_VERSION}
+# Pass in from environment to set image tag.
 export TAPIS_ENV=${TAPIS_ENV}
+
+export VER=${TAPIS_VERSION}
 export SRVC=testapps
 export TAPIS_ROOT=$(pwd)
 export SRVC_DIR="${TAPIS_ROOT}/target"
