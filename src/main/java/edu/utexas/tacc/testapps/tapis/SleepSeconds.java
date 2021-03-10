@@ -36,6 +36,11 @@ public class SleepSeconds
     private static final String INPUT_DIR_VARIABLE  = "_tapisExecSystemInputDir"; 
     private static final String OUTPUT_DIR_VARIABLE = "_tapisExecSystemOutputDir";
     private static final String EXEC_DIR_VARIABLE   = "_tapisExecSystemExecDir";
+    
+    // The container directories that correspond to the environment variable directories.
+    private static final String INPUT_DIR  = "/JobInput";
+    private static final String OUTPUT_DIR = "/JobOutput";
+    private static final String EXEC_DIR   = "/JobExec";
 
     // -------- Fields.
     private BufferedOutputStream   _outFile;
@@ -152,8 +157,8 @@ public class SleepSeconds
     private void printPreDirectories(Map<String,String> envMap) throws IOException
     {
         // Get the directory assignment from the application's environment.
-        String inputDir  = envMap.get(INPUT_DIR_VARIABLE);
-        String execDir   = envMap.get(EXEC_DIR_VARIABLE);
+        String inputDir = envMap.get(INPUT_DIR_VARIABLE) == null ? null : INPUT_DIR;
+        String execDir  = envMap.get(EXEC_DIR_VARIABLE)  == null ? null : EXEC_DIR;
         
         if (inputDir != null) {
             var dir = new File(inputDir);
@@ -178,7 +183,7 @@ public class SleepSeconds
     private void printPostDirectories(Map<String,String> envMap) throws IOException
     {
         // Get the directory assignment from the application's environment.
-        String outputDir = envMap.get(OUTPUT_DIR_VARIABLE);
+        String outputDir = envMap.get(OUTPUT_DIR_VARIABLE) == null ? null : OUTPUT_DIR;
         
         if (outputDir != null) {
             var dir = new File(outputDir);
