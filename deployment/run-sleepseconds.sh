@@ -3,6 +3,7 @@
 # Volume mount and environment command strings.
 envdirs=""
 vmounts=""
+jobparms=""
 
 # Each of the distinguished tapis job directories gets mounted in the container's
 # root directory with a different but hardcoded value.  The directories may need 
@@ -27,9 +28,17 @@ then
     vmounts+=" --mount type=bind,source="${_tapisExecSystemExecDir}",target=/JobExec"
 fi
 
+# If the caller passed in the number of seconds to sleep, then we set the
+# environment variable defined in the dockerfile for application parms. 
+if [ ! -z $1 ]
+then 
+    jobparms=" --env JOBS_PARMS=$1"
+fi
+
 # Debugging.
 #echo $envdirs
 #echo $vmounts
+#echo $jobparms
 
 # We run as the logged on user, which hopefully is not root.  Here's the final command that runs.
 echo
@@ -37,4 +46,4 @@ echo "docker run --name SleepSeconds -u $(id -u):$(id -g) --rm ${vmounts} ${envd
 echo ""
 
 # Run the container.
-docker run --name SleepSeconds --rm -u "$(id -u):$(id -g)" ${vmounts} ${envdirs} -e 'MAIN_CLASS=edu.utexas.tacc.testapps.tapis.SleepSeconds' tapis/testapps:main $1
+docker run --name SleepSeconds --rm -u "$(id -u):$(id -g)" ${vmounts} ${envdirs} ${jobparms} -e 'MAIN_CLASS=edu.utexas.tacc.testapps.tapis.SleepSeconds' tapis/testapps:main 
