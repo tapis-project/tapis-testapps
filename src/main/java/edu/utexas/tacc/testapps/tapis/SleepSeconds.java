@@ -77,12 +77,14 @@ public class SleepSeconds
             
             // Populate a map of JVM properties.
             var jvmProps = getJvmProperties();
-            tee("JVM PROPERTIES\n--------------\n");
+            tee("\nJVM PROPERTIES\n--------------\n");
             tee(jvmProps);
             
             // Print the environment variable values.
             tee("\nENVIRONMENT VARIABLES\n---------------------\n");
             tee(envMap);
+            
+            tee("\nSLEEP SECONDS: " + sleepSeconds + "\n");
             
             // Print the input directory listings.
             printPreDirectories(envMap);

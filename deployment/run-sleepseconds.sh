@@ -33,8 +33,8 @@ fi
 
 # We run as the logged on user, which hopefully is not root.  Here's the final command that runs.
 echo
-echo "docker run --name SleepSeconds -u $(id -u):$(id -g) --rm ${vmounts} ${envdirs} -e 'MAIN_CLASS=edu.utexas.tacc.testapps.tapis.SleepSeconds' tapis/testapps:main"
+echo "docker run --name SleepSeconds -u $(id -u):$(id -g) --rm ${vmounts} ${envdirs} -e 'MAIN_CLASS=edu.utexas.tacc.testapps.tapis.SleepSeconds' tapis/testapps:main" $1
 echo ""
 
 # Run the container.
-docker run --name SleepSeconds --rm -u "$(id -u):$(id -g)" ${vmounts} ${envdirs} -e 'MAIN_CLASS=edu.utexas.tacc.testapps.tapis.SleepSeconds' tapis/testapps:main
+docker run --name SleepSeconds --rm -u "$(id -u):$(id -g)" ${vmounts} ${envdirs} -e 'MAIN_CLASS=edu.utexas.tacc.testapps.tapis.SleepSeconds' tapis/testapps:main $1
