@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Volume mount and environment command strings.
+# Initialize all command line options passed to docker run.
 envdirs=""
 vmounts=""
 jobparms=""
@@ -42,7 +42,7 @@ fi
 
 # We run as the logged on user, which hopefully is not root.  Here's the final command that runs.
 echo
-echo "docker run --name SleepSeconds -u $(id -u):$(id -g) --rm ${vmounts} ${envdirs} -e 'MAIN_CLASS=edu.utexas.tacc.testapps.tapis.SleepSeconds' tapis/testapps:main" $1
+echo "docker run --name SleepSeconds -u $(id -u):$(id -g) --rm ${vmounts} ${envdirs} ${jobparms} -e 'MAIN_CLASS=edu.utexas.tacc.testapps.tapis.SleepSeconds' tapis/testapps:main" $1
 echo ""
 
 # Run the container.
