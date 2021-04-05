@@ -34,11 +34,6 @@ ARG BUILD_TIME
 
 MAINTAINER CIC Support <cicsupport@tacc.utexas.edu>
 
-# Make the standard tapis mountpoints inside the container. 
-RUN mkdir /TapisInput
-RUN mkdir /TapisExec
-RUN mkdir /TapisOutput
-
 # Add the applicaiton code
 COPY testapps.jar /usr/local/bin/testapps.jar
 

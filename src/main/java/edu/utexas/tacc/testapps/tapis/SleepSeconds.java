@@ -37,9 +37,9 @@ public class SleepSeconds
     private static final String EXEC_DIR_VARIABLE   = "_tapisExecSystemExecDir";
     
     // The container directories that correspond to the environment variable directories.
-    private static final String INPUT_DIR  = "/JobInput";
-    private static final String OUTPUT_DIR = "/JobOutput";
-    private static final String EXEC_DIR   = "/JobExec";
+    private static final String INPUT_DIR  = "/TapisInput";
+    private static final String OUTPUT_DIR = "/TapisOutput";
+    private static final String EXEC_DIR   = "/TapisExec";
 
     // -------- Fields.
     private BufferedOutputStream   _outFile;
