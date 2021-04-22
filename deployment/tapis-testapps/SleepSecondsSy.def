@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: openjdk:15-jdk-oracle
+Stage: build
+
+%files
+    testapps.jar /usr/local/bin/testapps.jar
+    
+%environment
+    export JAVA_OPTS=
+    export MAIN_CLASS=
+    export JOBS_PARMS=
+            
+%startscript
+    java -cp /usr/local/bin/testapps.jar ${JAVA_OPTS} ${MAIN_CLASS} ${JOBS_PARMS}
+    
+%runscript
+    java -cp /usr/local/bin/testapps.jar ${JAVA_OPTS} ${MAIN_CLASS} ${JOBS_PARMS}
